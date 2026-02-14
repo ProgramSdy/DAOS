@@ -1,0 +1,50 @@
+# -------------------------
+# PYTHON VIRTUAL ENVIRONMENTS
+# -------------------------
+venv/
+.venv/
+
+# -------------------------
+# PYTHON CACHE / BUILD FILES
+# -------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+build/
+dist/
+
+# -------------------------
+# EDITOR / IDE FILES
+# -------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# -------------------------
+# OS / SYSTEM FILES
+# -------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# -------------------------
+# OUTPUT FILES (generated PPT, temp data)
+# -------------------------
+*.pptx
+output/
+generated/
+temp/
+
+# -------------------------
+# LOGS
+# -------------------------
+*.log
+
+# -------------------------
+# ONE DRIVE SYNC JUNK
+# -------------------------
+~$*
