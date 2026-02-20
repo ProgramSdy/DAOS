@@ -1,6 +1,7 @@
 import os
 from pptx import Presentation
 from daos.core.node_base import Node
+from pptx.enum.shapes import PP_PLACEHOLDER
 
 
 class CreatePPTNode(Node):
@@ -35,24 +36,30 @@ class CreatePPTNode(Node):
         # --- Step 4: Fill PPT template ---
         # Slide 1 (Cover Page)
         cover = prs.slides[0]
+
         for shape in cover.shapes:
-            if not hasattr(shape, "text"):
+            if not shape.is_placeholder:
+                    continue
+
+            ph_type = shape.placeholder_format.type
+
+            # Title placeholder (CENTER_TITLE)
+            if ph_type == PP_PLACEHOLDER.CENTER_TITLE:
+                shape.text = full_case_number
                 continue
 
-            if "Presentation Title" in shape.text:
-                shape.text = full_case_number
-
-            if "Optional Subtitle" in shape.text:
+            # Subtitle placeholder
+            if ph_type == PP_PLACEHOLDER.SUBTITLE:
                 shape.text = issue_description
 
         # Slides 2–6 (content title)
-        for slide_index in range(1, 6):  # slide 2 → slide 6
+        for slide_index in range(1, 6):
             slide = prs.slides[slide_index]
+
             for shape in slide.shapes:
-                if hasattr(shape, "text") and "Page" in shape.text:
-                    # only replace title, not footer
-                    # better method → replace ONLY title placeholders
+                if shape.is_placeholder and shape.placeholder_format.type == PP_PLACEHOLDER.TITLE:
                     shape.text = issue_description
+
 
         # --- Step 5: Save new PPT ---
         prs.save(new_ppt_path)
